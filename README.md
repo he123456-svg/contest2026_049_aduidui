@@ -1,132 +1,61 @@
 # contest2026_049_aduidui
 
-👋 欢迎参加 **2026 首届 openvela AI 硬件开发者大赛**！
 
-这是组委会为你的队伍创建的**专属参赛仓库**（本仓为样例/模板，队伍编号 `049`；你看到的将是你自己的 `contest2026_<编号>_<队伍名>`）。比赛期间，你的全部参赛代码、打包产物与 AI Coding 日志都提交到这里。
-
-> 本仓既是「代码仓」，又内置了一键拉取整套 openvela 工程的 `repo` 清单（manifest）。你只需跟它打交道，**自始至终只动一个文件夹**。
-
----
-
-## 一、先读这些官方文档
-
-**通用（所有赛道必读）：**
-
-| 文档                                                                                                                                     | 用途                                           |
-| ---------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------- |
-| [《大赛总览》](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/contest_overview.md)                        | 赛道、流程、评分、资源，建议先通读             |
-| [《参赛代码提交指南》](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/code_submission_guide.md)           | 仓库获取、提交流程、时间与权限（**以此为准**） |
-| [《AI Coding 日志归集与提交手册》](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/ai_coding_log_guide.md) | 如何导出 AI 对话日志并提交到 `logs/`           |
-
-**按你的赛道选读（三选一）：**
-
-| 赛道                  | 教程导航                                                                                                                                                 |
-| --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 快应用 / 手表应用创新 | [快应用教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/quickapp/quickapp_guide_index.md)                         |
-| AI 硬件产品创新       | [AI 硬件赛道教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/ai_hardware/ai_hardware_guide_index.md)              |
-| 新硬件适配            | [新硬件适配赛道教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/hardware_porting/hardware_porting_guide_index.md) |
-
----
-
-## 二、第一步：拉取完整工程
-
-用组委会提供的命令一键拉取「openvela 全量源码 + 你的专属仓」：
-
-```bash
-repo init -u https://github.com/open-vela/contest2026_049_aduidui \
-  -b dev-ai-contest-2026 -m contest2026_049_aduidui.xml
-repo sync -c -j8
-```
-
-同步后，你的整个仓库位于工作区的 `contest2026_049_aduidui/`，openvela 全量源码在外层（`nuttx/`、`apps/`、`packages/`、`vendor/` 等）。
-
----
-
-## 三、第二步：在哪里写代码
-
-**只在自己的仓目录 `contest2026_049_aduidui/` 里开发。** 不同作品形态放在对应子目录，manifest 会通过 `<linkfile>` 把它们**软链**到 openvela 编译树该在的位置——你不用手动 copy：
-
-| 作品形态 | 你的代码放这里             | 系统自动映射到                                 |
-| -------- | -------------------------- | ---------------------------------------------- |
-| 应用     | `app/hello_app/`           | `packages/demos/contest2026_049_hello_app`     |
-| 快应用   | `quickapp/hello_quickapp/` | `packages/apps/contest2026_049_hello_quickapp` |
-| 板级适配 | `board/contest_board/`     | `vendor/openvela/boards/contest2026_049_board` |
-
-> 用不到的形态目录可以删掉；新增作品时按同样规则加子目录，并在 `contest2026_049_aduidui.xml` 里补一条 `<linkfile>` 映射即可。**生产仓库（packages/nuttx/vendor 等）零改动。**
-
-建议仓库目录约定（便于评委定位）：
-
-```text
-app/ | quickapp/ | board/   # 你的作品代码
-logs/                       # AI Coding 日志（主动导出后提交，格式见 logs/README.md）
-README.md                   # 作品说明（提交前请改成你自己的，见第六节）
-```
-
-> 仓内附带了一个 `.gitignore.example`，给出了**编译产物**等不需要进仓的文件示例。如需启用，`cp .gitignore.example .gitignore` 后按需增删即可。**注意 `logs/` 下最终导出的 AI Coding 日志必须提交，不要忽略。**
->
-> `logs/` 的目录结构与提交格式见 [logs/README.md](logs/README.md)。
-
----
-
-## 四、第三步：编译与运行
-
-编译/运行步骤随作品形态不同而不同，请参考你所在赛道的教程导航：
-
-- 快应用 / 手表应用：[快应用教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/quickapp/quickapp_guide_index.md)（含模拟器与开发板部署）。
-- AI 硬件产品创新：[AI 硬件赛道教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/ai_hardware/ai_hardware_guide_index.md)（环境搭建、编译烧录、Skill 开发）。
-- 新硬件适配：[新硬件适配赛道教程导航](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/hardware_porting/hardware_porting_guide_index.md)（BSP 移植、最小 NSH 基线）。
-
-子目录已通过 manifest 中的 `<linkfile>` 软链进 openvela 编译树，因此构建在 openvela 工作区**根目录**（即你这个仓的上一级）进行。openvela 使用 `build.sh` 作为统一入口，接收一个 **board config 路径**作为参数：
-
-```bash
-# 进入 openvela 工作区根目录（你的仓的上一级）
-cd ..
-
-# 通用语法：第一个参数是 board config 路径，第二个参数可以是 menuconfig / distclean 等
-./build.sh <board-config-path> [menuconfig|distclean] [-j8]
-```
-
-> 具体的 board config 路径、目标产物、模拟器/真机部署方式请以你所在赛道的教程导航为准。本仓 `app/` `quickapp/` `board/` 三个示例骨架对应的 Kconfig 选项可通过 `menuconfig` 启用。
-
----
-
-## 五、第四步：提交作品
-
-1. **fork** 你的专属仓 → 开发 → `git commit` 并推送 → 向专属仓发起 **Pull Request**，可**自行 review 并合入**（无需等组委会）。
-2. **AI Coding 日志**：与 AI 工具的对话会自动记录到本机 staging（不会自动上传），需你**主动导出/打包**选定会话到仓内 `logs/` 目录后一并提交。详见[《AI Coding 日志归集与提交手册》](https://github.com/open-vela/docs/blob/dev-ai-contest-2026/zh-cn/contest_2026/ai_coding_log_guide.md)。
-3. 若需改动 **nuttx 等公共仓库**，不在本仓改，而是 fork 对应公共仓、以 PR 提交到 `dev-ai-contest-2026` 分支，由组委会 review 后合入。
-
-> ⏰ **提交作品截止：9 月 20 日**。截止后统一收回 push 权限，仍可查看 / clone。
->
-> 获奖后再按要求将作品 PR 至 openvela 上游对应仓库（走标准 PR + CI 流程）。
-
-### 关于 PR 与 CLA
-
-- 本仓所有改动通过 **Pull Request** 合入（分支保护强制，可自行合入自己的 PR）。
-- 首次贡献需在[**官网签署 CLA**](https://openvela.com/#/community/cla)；PR 上会自动跑 `cla/signature` 检查，在官网签署成功后，在 PR 评论 `/check-cla` 复检即可通过。
-
----
-
-## 六、提交前：把本 README 改成你的作品说明
-
-本文件目前是组委会给的**使用说明书**。**作品提交前，请把它替换成你自己作品的说明**，方便评委快速了解你做了什么、怎么跑起来。建议至少包含以下内容：
-
-```电睛之臂——基于轻量型边缘AI的机械臂分拣系统
-# <你的作品名>
+# <电睛之臂——基于轻量型边缘AI的机械臂分拣系统>
 
 ## 一、作品简介
-<一句话/一段话说明这个作品是什么、解决什么问题、亮点在哪>
+在农业果蔬筛检领域，传统的操作方式是工人操作，依靠个人方法结合自然经验进行工作，存在效率低等不足的问题。随着智慧农业技术的发展，服务型机器人依靠节能增效等优点也广泛被各行业运用在生产制造工作中。因此本研究针对机械臂的智能抓取任务，基于单目视觉的果蔬目标检测以及定位抓取算法，构建且实现一套满足智能果蔬分拣系统。主要的研究内容和工作如下。
+第一，本文设计实现了一种使用CSPDarknet骨干网络的水果检测算法。使用卷积神经网络
+  提取图像特征，并通过Head层多尺度特征融合，让检测目标在进行服务分类和回归任务时
+  ，可以完成网络骨架的轻量化，同时增强梯度流，保持卷积的特征。
+第二，本文使用vscode编程软件来完成机械臂步长的自适应设计和开发工作。本文分析了实际作业和机械臂工作空间，完成了机械臂结构参数的优化设计。还使用3D建模技术来制作机械臂的三维模型，通过观察物理轨迹以保证运动学分析结果的准确，并且为系统搭建提供支持
+第三，本文完成了对智能果蔬分拣系统的研究。系统使用分体模块化模式，把感知层、交互层、执行层和通信层等模块集成在一起，开发工作包括张正友手眼标定、目标检测、机械臂闭环梯形加减速、端对端状态机通信。整模式统可以实现实时采集环境数据，并且支持进行数据可视化、系统管理。
+第四，第四，本文设计并实现了基于端侧AI Agent的智能语音交互功能。用户通过语音与AI Agent对话，Agent将语义解析为机械臂控制指令，经由状态机通信层驱动执行层完成抓取、分拣、归位等操作。系统在端侧完成推理，无需依赖云端服务，具备低延迟、高可靠、隐私安全等优势。该设计将AI Agent与机器人控制深度融合，实现了真正的人机自然交互，体现人工智能在智慧农业场景中的切实落地价值。
+
 
 ## 二、选题方向
-<快应用 / 手表应用创新 ｜ AI 硬件产品创新 ｜ 新硬件适配 ｜ 自定方向，并简述理由>
-
+	新硬件适配
+ 结合本项目智能果蔬分拣系统的技术需求与系统架构，选用润芯微 gemini-s1作为核心控制平台，主要基于以下考量：
+  1. 端侧 AI 推理能力，契合轻量化检测需求
+  本系统采用 CSPDarknet骨干网络实现水果目标检测，需要在本地完成图像特征的实时提取与推理。gemini-s1
+  具备端侧神经网络加速能力，可在本地运行轻量化检测模型，无需依赖云端算力，满足分拣场景对实时性与低延迟的要求。同时避免了网络传输带来的不确定性，保障了系统在农业现场环境下的稳定运行。
+  2. 支持 AI Agent 框架部署，赋能人机交互系统第四部分的核心创新在于将 xiaomimino AI Agent
+  框架部署于端侧，实现自然语言控制机械臂。gemini-s1 提供足够的算力资源以承载 AIgent 的本地化运行，包括语音识别、语义理解与任务调度。端侧部署意味着用户无需联网即可完成语音指令的解析与执行，在农业大棚、田间地头等网络条件受限的场景中具有显著优势。
+  3. 多接口支持，满足系统模块化集成需求
+  本系统采用分体模块化架构，集成了感知层（相机）、执行层（机械臂）、通信层（状态机）等多个模块。gemini-s1 提供丰富的外设接口，可同时挂载 USB相机、串口机械臂控制模块、显示模块等外设，为系统集成提供了硬件基础，避免了多板堆叠带来的复杂度与稳定性风险。
+  4. 实时操作系统支持，契合工业级控制需求
+  系统需要完成机械臂闭环梯形加减速控制、张正友手眼标定、端对端状态机通信等实时性要求较高的任务。gemini-s1 适配 NuttX 实时操作系统，具备确定性的任务调度与中断响应能力，能够保证机械臂控制指令的精确时序，满足分拣作业对运动控制精度的要求。
+  5. 低功耗、高集成度，适配农业场景
+  农业果蔬分拣场景对设备的功耗、体积和部署灵活性有一定要求。gemini-s1作为嵌入式开发板，具备低功耗、高集成度的特点，适合部署在分拣流水线或移动式分拣平台上，具有较高的实用落地价值。
+  
 ## 三、目录结构
-<列出你这个仓里各目录/文件的作用，例如：>
-- `app/xxx/`        — <说明>
-- `board/xxx/`      — <说明>
-- `quickapp/xxx/`   — <说明>
-- `logs/`           — AI Coding 日志
-- `docs/` 或其他    — <说明>
+contest2026_049_aduidui/
+  ├── app/hello_app/                — NuttX 应用代码（智能果蔬分拣系统核心代码）
+  │   ├── hello_app_main.c          — 应用主程序入口
+  │   ├── CMakeLists.txt            — CMake 构建配置
+  │   ├── Makefile                  — Make 构建文件
+  │   ├── Make.defs                 — Make 编译选项定义
+  │   ├── Kconfig                   — 内核配置项
+  │   └── README.md                 — 应用说明文档
+  │
+  ├── board/contest_board/          — 板级支持包（适配润芯微 gemini-s1 开发板）
+  │   ├── src/board_boot.c          — 板级启动引导代码
+  │   ├── src/CMakeLists.txt        — BSP 源码构建配置
+  │   ├── configs/nsh/defconfig     — NSH 默认配置（按需修改适配 gemini-s1）
+  │   ├── Kconfig                   — 板级配置项
+  │   ├── CMakeLists.txt            — 板级构建配置
+  │   └── README.md                 — 板级说明文档
+  │
+  ├── logs/                         — AI Coding 日志
+  │   ├── your-github-login/        — 各开发者日志（按 GitHub 用户名/日期组织）
+  │   ├── README.md                 — 日志说明
+  │   └── manifest.json             — 日志清单
+  │
+  ├── .github/workflows/cla.yml     — GitHub Actions CI 工作流（CLA 检查）
+  ├── contest2026_049_aduidui.xml   — 本仓库的 repo 清单文件
+  ├── openvela.xml                  — openvela 平台的 repo 清单文件
+  ├── .gitignore.example            — Git 忽略规则示例
+  └── README.md                     — 总项目说明文档
 
 ## 四、运行方式
 <拉取工程后，如何编译、烧录/部署、运行的完整步骤；最好能让评委照着一步步复现>
